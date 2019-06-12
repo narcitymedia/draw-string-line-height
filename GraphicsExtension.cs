@@ -8,22 +8,16 @@ using System.Drawing.Imaging;
 
 namespace draw_string_line_height
 {
+    /// <summary>
+    /// Provides extension methods for the <see cref="System.Drawing.Graphics"/>
+    /// </summary>
     public static class GraphicsExtension
     {
-        // private static IEnumerable<string> WrapTextLines(string text, int maxWidth)
-        // {
-        //     if (text == null) { throw new ArgumentNullException("text", "The text paramater cannot be null"); }
-
-        //     if (maxWidth <= 0) { throw new ArgumentException("The specified maximum width must be greater than 0", "maxWidth"); }
-
-
-        // }
-
         /// <summary>
-        /// Calculates how the given text will have to be wrapped nin order to fit in the given width
+        /// Calculates how the given text will have to be wrapped in order to fit in the given width
         /// </summary>
         /// <param name="text">The full text for which to calculate the text wrap</param>
-        /// <param name="font">he font tht will be used to display the text</param>
+        /// <param name="font">The font tht will be used to display the text</param>
         /// <param name="maxWidth">The width in which the text must fit</param>
         /// <returns>
         /// A string enumerable where each string is a substring of the text param and represents a line
@@ -52,7 +46,7 @@ namespace draw_string_line_height
                     // Add the current line to the lines list
                     lines.Add(new List<string>(l));
 
-                    // Clear the lit used to store the words of the current line
+                    // Clear the list used to store the words of the current line
                     l.Clear();
 
                     // Since the current word did not fit in the current line, add it to the new one
@@ -63,6 +57,15 @@ namespace draw_string_line_height
             return new string[0];
         }
 
+        /// <summary>
+        /// Measures the space taken up by a given text for a given font, width and line height
+        /// </summary>
+        /// <param name="that">The extended <see cref="System.Drawing.Graphics" /> object</param>
+        /// <param name="text">The text to measure</param>
+        /// <param name="font">The font used to display the text</param>
+        /// <param name="maxWidth">The width in which the text must fit</param>
+        /// <param name="lineHeight">The custom line height used to calculate the text size</param>
+        /// <returns>The size taken up by the given text with the given parameters</returns>
         public static SizeF MeasureString(this Graphics that, string text, Font font, int maxWidth, int lineHeight)
         {
             if (text == null || text.Length == 0)
