@@ -1700,10 +1700,12 @@
   },
   "libraries": {
     "Microsoft.CodeCoverage/1.0.3": {
-      "sha512": "5KfX12XPfvBomjrZv9nCBfQ6lhZdroVxXvGnY6MqzG83bjqdq6SQ3xxJFdPgHv6oli83M9oNhZlynYehjmboUg==",
+      "sha512": "CmE+u43TKfA4dLkle2NwArwZ9qAvPDC/8jzTDGIxdAI6+5lU8JKm9wRF8YICz5RMtLe+jzMmPm0/r1Awo6zoiQ==",
       "type": "package",
       "path": "microsoft.codecoverage/1.0.3",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/netstandard1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll",
         "microsoft.codecoverage.1.0.3.nupkg.sha512",
         "microsoft.codecoverage.nuspec"
@@ -1779,10 +1781,12 @@
       ]
     },
     "Microsoft.DotNet.PlatformAbstractions/1.0.3": {
-      "sha512": "rF92Gp5L2asYrFNf0cKNBxzzGLh1krHuj6TRDk9wdjN2qdvJLaNYOn1s9oYkMlptYX436KiEFqxhLB+I5veXvQ==",
+      "sha512": "+AheRvuidpztC3mr2PukG8bjKqtzwGKZznZTv2KVILnqvauFkTBrewgUvUs+FYSQe0uEyFJEAVsBC5G+tVRLAw==",
       "type": "package",
       "path": "microsoft.dotnet.platformabstractions/1.0.3",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/.DS_Store",
         "lib/net451/Microsoft.DotNet.PlatformAbstractions.dll",
         "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll",
@@ -1791,10 +1795,12 @@
       ]
     },
     "Microsoft.Extensions.DependencyModel/1.0.3": {
-      "sha512": "Z3o19EnheuegmvgpCzwoSlnCWxYA6qIUhvKJ7ifKHHvU7U+oYR/gliLiL3LVYOOeGMEEzkpJ5W67sOcXizGtlw==",
+      "sha512": "oj8P60y2Atw9GBm+6y4o8cTkjkgUZC197TH4GmsAkSKT1/x+iPIy8M5udgAa0UofLvpS0aCB/FfgCqgE11m3gA==",
       "type": "package",
       "path": "microsoft.extensions.dependencymodel/1.0.3",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "lib/.DS_Store",
         "lib/net451/Microsoft.Extensions.DependencyModel.dll",
         "lib/netstandard1.3/Microsoft.Extensions.DependencyModel.dll",
@@ -2124,10 +2130,11 @@
       ]
     },
     "Microsoft.NETCore.Platforms/2.1.0": {
-      "sha512": "TT+QCi9LcxGTjBssH7S7n5+8DVcwfG4DYgXX7Dk7+BfZ4oVHj8Q0CbYk9glzAlHLsSt3bYzol+fOdra2iu6GOw==",
+      "sha512": "aSTPL94NloSiQVL5Len8wbjFKOnoAX/vOh3s3DF6g3c7GUUMLCDvnBhmA72M2iN2AedyA8hpr7m89kzSAKUnJQ==",
       "type": "package",
       "path": "microsoft.netcore.platforms/2.1.0",
       "files": [
+        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
@@ -2858,10 +2865,12 @@
       ]
     },
     "System.Collections.Immutable/1.2.0": {
-      "sha512": "Cma8cBW6di16ZLibL8LYQ+cLjGzoKxpOTu/faZfDcx94ZjAGq6Nv5RO7+T1YZXqEXTZP9rt1wLVEONVpURtUqw==",
+      "sha512": "ACF5WhVfZ/EkfmVy9wpc3oJCK7koh1GlnXQ4WXW9N4ribzY8aKF6Vr56jD0rNTuUzFvRWDbHuYJ/Qnrtrd/7VA==",
       "type": "package",
       "path": "system.collections.immutable/1.2.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/System.Collections.Immutable.dll",
@@ -3282,10 +3291,12 @@
       ]
     },
     "System.Diagnostics.TextWriterTraceListener/4.0.0": {
-      "sha512": "w36Dr8yKy8xP150qPANe7Td+/zOI3G62ImRcHDIEW+oUXUuTKZHd4DHmqRx5+x8RXd85v3tXd1uhNTfsr+yxjA==",
+      "sha512": "oRsXCz76GDDMrwjMjH6keR9erFIofhGaIMc2d4NykI4rdBEuUP5ZswYA30LGPdyCK7DV4bMBEJL3nJFyAJoS/g==",
       "type": "package",
       "path": "system.diagnostics.textwritertracelistener/4.0.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -3374,10 +3385,12 @@
       ]
     },
     "System.Diagnostics.TraceSource/4.0.0": {
-      "sha512": "6WVCczFZKXwpWpzd/iJkYnsmWTSFFiU24Xx/YdHXBcu+nFI/ehTgeqdJQFbtRPzbrO3KtRNjvkhtj4t5/WwWsA==",
+      "sha512": "q5bGzzvXVi+dIMiPWRhXZV7r+Os3TEOuRW5LHsAUDGpqJHol8XiLokVpsgAfPqHHNkyx1bbv5lRZqRkRrGZKxQ==",
       "type": "package",
       "path": "system.diagnostics.tracesource/4.0.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -4319,10 +4332,12 @@
       ]
     },
     "System.Reflection.Metadata/1.3.0": {
-      "sha512": "jMSCxA4LSyKBGRDm/WtfkO03FkcgRzHxwvQRib1bm2GZ8ifKM1MX1al6breGCEQK280mdl9uQS7JNPXRYk90jw==",
+      "sha512": "piuaOy0ZH1/nNHMdwFrHP27ToY7SVblMqc+u8oEVf434IcpMmWpuU9aXWhAleRYjnKmfB3VIvGswEwiwptueXg==",
       "type": "package",
       "path": "system.reflection.metadata/1.3.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.1/System.Reflection.Metadata.dll",
@@ -4825,10 +4840,12 @@
       ]
     },
     "System.Runtime.Loader/4.0.0": {
-      "sha512": "4UN78GOVU/mbDFcXkEWtetJT/sJ0yic2gGk1HSlSpWI0TDf421xnrZTDZnwNBapk1GQeYN7U1lTj/aQB1by6ow==",
+      "sha512": "AGWrywLI2B15/dnLuFnlHWFjXmq1Tl0kjWaKTHbaJ8T9kIxiQ8YGTtiMQc8rUr49l2JjfZa7QY0KKqlyzA7NNg==",
       "type": "package",
       "path": "system.runtime.loader/4.0.0",
       "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/net462/_._",
@@ -5750,37 +5767,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gabri\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/gaboik/.nuget/packages/": {},
+    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\tests.csproj",
+      "projectUniqueName": "/home/gaboik/Desktop/draw-string-line-height/tests/tests.csproj",
       "projectName": "tests",
-      "projectPath": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\tests.csproj",
-      "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\obj\\",
+      "projectPath": "/home/gaboik/Desktop/draw-string-line-height/tests/tests.csproj",
+      "packagesPath": "/home/gaboik/.nuget/packages/",
+      "outputPath": "/home/gaboik/Desktop/draw-string-line-height/tests/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\gabri\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/gaboik/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\src\\draw-string-line-height.csproj": {
-              "projectPath": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\src\\draw-string-line-height.csproj"
+            "/home/gaboik/Desktop/draw-string-line-height/src/draw-string-line-height.csproj": {
+              "projectPath": "/home/gaboik/Desktop/draw-string-line-height/src/draw-string-line-height.csproj"
             }
           }
         }
