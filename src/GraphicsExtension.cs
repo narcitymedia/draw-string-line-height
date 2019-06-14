@@ -77,7 +77,19 @@ namespace draw_string_line_height
             return new SizeF(maxWidth, lineHeight * lines.Length);
         }
 
-
+        /// <summary>
+        /// Draws the specified text string in the specified rectangle with the specified font, brush,
+        /// width, line height and format
+        /// </summary>
+        /// <param name="that">The extended <see cref="System.Drawing.Graphics" /> object</param>        
+        /// <param name="text">The text to draw</param>
+        /// <param name="font">The font used to display the text</param>
+        /// <param name="brush">The brush used to draw the text</param>
+        /// <param name="maxWidth">A positive number (grater than zero) that represents the width in which the text must fit</param>        
+        /// <param name="lineHeight">The distance in pixels that separaes the lines of the text</param>
+        /// <param name="layoutRectangle"><see cref="System.Drawing.RectangleF" /> structure that specifies the location of the drawn text</param>
+        /// <param name="format">that specifies formatting attributes, such as line spacing and alignment, that are applied to the drawn text.</param>
+        /// <returns></returns>
         public static Rectangle[] DrawString(this Graphics that, string text, Font font, Brush brush, int maxWidth,
                                             int lineHeight, RectangleF layoutRectangle, StringFormat format)
         {
@@ -88,7 +100,7 @@ namespace draw_string_line_height
             {
                 SizeF lineSize = that.MeasureString(line, font);
                 Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + lineHeight);
-                that.DrawString(line, font, brush, layoutRectangle);
+                that.DrawString(line, font, brush, lineOrigin);
                 lastDrawn = new Rectangle(lineOrigin, Size.Round(lineSize));
             }
 
