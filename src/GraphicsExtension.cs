@@ -78,16 +78,18 @@ namespace draw_string_line_height
         }
 
 
-        public static Region[] DrawString(this Graphics that, string text, Font font, Brush brush, int maxWidth,
+        public static Rectangle[] DrawString(this Graphics that, string text, Font font, Brush brush, int maxWidth,
                                             int lineHeight, RectangleF layoutRectangle, StringFormat format)
         {
             string[] lines = that.GetWrappedLines(text, font, maxWidth).ToArray();
-            Region[] regions = new Region[lines.Length];
-
+            Rectangle[] regions = new Rectangle[lines.Length];
+            Rectangle lastDrawn = new Rectangle(Convert.ToInt32(layoutRectangle.X), Convert.ToInt32(layoutRectangle.Y), 0, 0);
             foreach (string line in lines)
             {
-                
-                that.DrawString(line, font, brush,layoutRectangle);
+                SizeF lineSize = that.MeasureString(line, font);
+                Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + lineHeight);
+                that.DrawString(line, font, brush, layoutRectangle);
+                lastDrawn = new Rectangle(lineOrigin, Size.Round(lineSize));
             }
 
             return regions;
