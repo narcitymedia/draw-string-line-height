@@ -116,8 +116,8 @@ namespace Tests
         public void DrawString_Empty_String()
         {
             Point origin = new Point(10,10);
-            this.GraphicsInstance.DrawString("Coding is fun! Yay!", this.MonoSpaceFont, this.TextBrush,
-                    20, 200, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
+            this.GraphicsInstance.DrawString("php how i hate thee, your objects and libs are messy, now hope it doesn't fail if you pass String.Empty", this.MonoSpaceFont, this.TextBrush,
+                    500, 80, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
 
             string imgPath = Path.Join(
                 this.AbsImageOutputDir,

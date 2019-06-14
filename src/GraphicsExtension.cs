@@ -32,13 +32,12 @@ namespace draw_string_line_height
             if (words.Length == 0) return new string[0];
 
             List<string> lines = new List<string>();
-            string currentLine = String.Empty;
 
+            string currentLine = words[0];
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i];
-                string potentialLine = currentLine + " " + word;
-                float potentialWidth = that.MeasureString(potentialLine, font).Width;
+                float potentialWidth = that.MeasureString(currentLine, font).Width;
                 if (potentialWidth > maxWidth)
                 {
                     lines.Add(currentLine);
@@ -46,7 +45,7 @@ namespace draw_string_line_height
                 }
                 else
                 {
-                    currentLine = potentialLine;
+                    currentLine = currentLine + " " + word;
                     if (i + 1 == words.Length) lines.Add(currentLine);
                 }
             }
