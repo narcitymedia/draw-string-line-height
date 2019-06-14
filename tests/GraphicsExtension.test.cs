@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -7,7 +8,7 @@ using draw_string_line_height;
 
 namespace Tests
 {
-    public class GraphicsExtensionTests
+    public class GraphicsExtensionTests_GetWrappedLines
     {
         protected Bitmap SampleBmp;
         protected Graphics GraphicsInstance;
@@ -75,6 +76,49 @@ namespace Tests
             string s = "php how i hate thee, your objects and libs are messy, now hope it doesn't fail if you pass String.Empty";
             string[] lines = this.GraphicsInstance.GetWrappedLines(s, this.MonoSpaceFont).ToArray();
             Assert.AreEqual(1, lines.Length);
+        }
+    }
+
+    public class GraphicsExtensionTests_MeasureString
+    {
+        [Test]
+        public void MeasureString_Empty_String()
+        {
+
+        }
+    }
+    
+    public class GraphicsExtensionTests_DrawString
+    {
+        protected Bitmap canvas;
+        protected Graphics GraphicsInstance;
+        protected Font MonoSpaceFont;
+        protected SolidBrush TextBrush;
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            this.canvas = new Bitmap(1080, 1080);
+            this.GraphicsInstance = Graphics.FromImage(this.canvas);
+            this.MonoSpaceFont = new Font(FontFamily.GenericMonospace, 16);
+            this.TextBrush = new SolidBrush(Color.White);
+        }
+
+        [Test]
+        public void DrawString_Empty_String()
+        {
+            Point origin = new Point(10,10);
+            this.GraphicsInstance.DrawString("Coding is fun! Yay!", this.MonoSpaceFont, this.TextBrush,
+                    this.canvas.Width - origin.X, 50, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
+
+            this.canvas.Save(".\\testresults\\img.png", ImageFormat.Png);
+            Assert.AreEqual(true, true);
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            // this.canvas.Save(Path.Join("testresults", "test_" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()));        }
         }
     }
 }
