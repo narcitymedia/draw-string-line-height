@@ -94,14 +94,22 @@ namespace Tests
         protected Graphics GraphicsInstance;
         protected Font MonoSpaceFont;
         protected SolidBrush TextBrush;
+        protected const string ImagesOutputDirName = "testimgoutput";
+        protected string AbsImageOutputDir;
 
         [OneTimeSetUp]
         public void Setup()
         {
             this.canvas = new Bitmap(1080, 1080);
             this.GraphicsInstance = Graphics.FromImage(this.canvas);
+            this.GraphicsInstance.Clear(Color.White);
             this.MonoSpaceFont = new Font(FontFamily.GenericMonospace, 16);
-            this.TextBrush = new SolidBrush(Color.White);
+            this.TextBrush = new SolidBrush(Color.Black);
+            this.AbsImageOutputDir = Path.Join(TestContext.CurrentContext.WorkDirectory, ImagesOutputDirName);
+            if (!Directory.Exists(this.AbsImageOutputDir))
+            {
+                Directory.CreateDirectory(this.AbsImageOutputDir);
+            }
         }
 
         [Test]
@@ -109,9 +117,16 @@ namespace Tests
         {
             Point origin = new Point(10,10);
             this.GraphicsInstance.DrawString("Coding is fun! Yay!", this.MonoSpaceFont, this.TextBrush,
-                    this.canvas.Width - origin.X, 50, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
+                    20, 200, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
 
-            this.canvas.Save(".\\testresults\\img.png", ImageFormat.Png);
+            string imgPath = Path.Join(
+                this.AbsImageOutputDir,
+                "test_" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString() + ".png"
+            );
+
+            TestContext.Progress.WriteLine(imgPath);
+            TestContext.Progress.WriteLine(TestContext.CurrentContext.WorkDirectory);
+            this.canvas.Save(imgPath, ImageFormat.Png);
             Assert.AreEqual(true, true);
         }
 
