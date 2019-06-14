@@ -52,7 +52,7 @@ namespace Tests
 
         [Test]
         /// <summary>
-        /// When passed a max width that is smaller than the size of a single, the returned string enumerable
+        /// When passed a max width that is smaller than the size of a single character, the returned string enumerable
         /// is expected to have a length equal to the number of words in the given string becase the split occurs at every word
         /// (NOT every character)
         /// </summary>
