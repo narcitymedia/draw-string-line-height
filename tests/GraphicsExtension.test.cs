@@ -68,6 +68,24 @@ namespace Tests
         }
 
         /// <summary>
+        /// Make sure that words contained in the returned array are in the same order as they appear in the original string
+        /// </summary>
+        [TestCase("Coding is fun!")]
+        [TestCase("I love when tests pass")]
+        public void GetWrappedLines_MaxWidth_Smaller_Than_CharWidth_Correct_Order(string s)
+        {
+            string[] words = s.Split((char[]) null);
+            string[] lines = this.GraphicsInstance.GetWrappedLines(s, this.MonoSpaceFont, this.CharacterWidth - 1).ToArray();
+            
+            // Each line contains a single word since the maxwidth is smaller than a single character,
+            // see this.GetWrappedLines_MaxWidth_Smaller_Than_CharWidth() 
+            for (int i = 0; i < words.Length; i++)
+            {
+                Assert.AreEqual(words[i], lines[i]);
+            }
+        }
+
+        /// <summary>
         /// When using the default maxWidth (Infinity), an array of length 1 should be returned for a non empty or blank string
         /// </summary>
         public void GetWrappedLines_Default_Width()
@@ -77,6 +95,7 @@ namespace Tests
             string[] lines = this.GraphicsInstance.GetWrappedLines(s, this.MonoSpaceFont).ToArray();
             Assert.AreEqual(1, lines.Length);
         }
+
     }
 
     public class GraphicsExtensionTests_MeasureString
@@ -116,8 +135,8 @@ namespace Tests
         public void DrawString_Empty_String()
         {
             Point origin = new Point(10,10);
-            this.GraphicsInstance.DrawString("php how i hate thee, your objects and libs are messy, now hope it doesn't fail if you pass String.Empty", this.MonoSpaceFont, this.TextBrush,
-                    500, 80, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
+            this.GraphicsInstance.DrawString("Coding is pretty fun!", this.MonoSpaceFont, this.TextBrush,
+                    20, 80, new Rectangle(origin, new Size(1000, 1000)), StringFormat.GenericDefault);
 
             string imgPath = Path.Join(
                 this.AbsImageOutputDir,
