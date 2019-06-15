@@ -41,11 +41,13 @@ namespace draw_string_line_height
                 if (potentialWidth > maxWidth)
                 {
                     lines.Add(currentLine);
-                    currentLine = word;
+                    if (i + 1 < words.Length) currentLine = words[i + 1];
+                    continue;
                 }
                 else
                 {
                     currentLine = currentLine + " " + word;
+                    // If last word
                     if (i + 1 == words.Length) lines.Add(currentLine);
                 }
             }
