@@ -73,12 +73,15 @@ namespace NarcityMedia.DrawStringLineHeight
                 return new SizeF(0, 0); 
             if (font == null)
                 throw new ArgumentNullException("font");
+            if (maxWidth <= 0)
+                throw new ArgumentOutOfRangeException("maxWidth");
 
             string[] lines = that.GetWrappedLines(text, font, maxWidth).ToArray();
-            
+
             if (lines.Length == 0) return new SizeF(0, 0);
 
             SizeF[] sizes = lines.Select(l => that.MeasureString(l, font)).ToArray();
+
             int lineIncrement = Math.Max(lineHeight, font.Height);
             float totalWidth = sizes.Max(s => s.Width);
             float totalHeight = lines.Length * lineIncrement;
