@@ -99,6 +99,24 @@ namespace Tests
             Assert.AreEqual(1, lines.Length);
         }
 
+        [Test]
+        public void GetWrappedLines_Null_Font()
+        {
+            Assert.Throws<ArgumentNullException>(() => {
+                this.GraphicsInstance.GetWrappedLines("Some text", null);
+            });
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(int.MinValue)]
+        public void GetWrappedLines_Non_Positive_MaxWidth(int maxWidth)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => {
+                this.GraphicsInstance.GetWrappedLines("Some text", this.MonoSpaceFont, maxWidth);
+            });
+        }
     }
 
     public class GraphicsExtensionTests_MeasureString
@@ -136,6 +154,16 @@ namespace Tests
         }
 
         [Test]
+        public void MeasureString_Null_Font()
+        {
+            int randomMaxWidth = this.RndGenerator.Next(10, 100);
+            int randomLineHeight = this.RndGenerator.Next(10, 100);
+            Assert.Throws<ArgumentNullException>(() => {
+                this.GraphicsInstance.MeasureStringLineHeight("Some text", null, randomMaxWidth, randomLineHeight);
+            });
+        }
+
+        [Test]
         /// <summary>
         /// When a line height smaller than the character height is passed to MeasureString, the height
         /// of the character itself should be returned to make sure the 'real' text painting region
@@ -160,11 +188,23 @@ namespace Tests
                 Assert.AreEqual(lineHeight, size.Height, "Expected returned size's height to correspond to the custom line height");
             }
         }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(int.MinValue)]
+        public void MeasureString_Non_Positive_MaxWidth(int maxWidth)
+        {
+            int randomLineHeight = this.RndGenerator.Next(10, 100);
+            Assert.Throws<ArgumentOutOfRangeException>(() => {
+                this.GraphicsInstance.MeasureStringLineHeight("Some text", this.MonoSpaceFont, maxWidth, randomLineHeight);
+            });
+        }
     }
     
     public class GraphicsExtensionTests_DrawString
     {
-        protected Bitmap canvas;
+        protected Bitmap Canvas;
         protected Graphics GraphicsInstance;
         protected Font MonoSpaceFont;
         protected SolidBrush TextBrush;
@@ -174,8 +214,8 @@ namespace Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            this.canvas = new Bitmap(1080, 1080);
-            this.GraphicsInstance = Graphics.FromImage(this.canvas);
+            this.Canvas = new Bitmap(1080, 1080);
+            this.GraphicsInstance = Graphics.FromImage(this.Canvas);
             this.GraphicsInstance.Clear(Color.White);
             this.MonoSpaceFont = new Font(FontFamily.GenericMonospace, 16);
             this.TextBrush = new SolidBrush(Color.Black);
@@ -199,14 +239,14 @@ namespace Tests
             );
 
             TestContext.Progress.WriteLine("Saving test generated image to " + imgPath);
-            this.canvas.Save(imgPath, ImageFormat.Png);
+            this.Canvas.Save(imgPath, ImageFormat.Png);
             Assert.AreEqual(true, true);
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            // this.canvas.Save(Path.Join("testresults", "test_" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()));        }
+            this.Canvas.Dispose();
         }
     }
 }
