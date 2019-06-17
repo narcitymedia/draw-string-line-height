@@ -135,20 +135,6 @@ namespace Tests
             Assert.AreEqual(0, size.Height);
         }
 
-        // [Test]
-        // /// <summary>
-        // /// When no max width is given, the text should fit entirely on one line, so the returned size should
-        // /// have a width equal to the length of all characters
-        // /// </summary>
-        // public void MeasureString_No_Max_Width()
-        // {
-        //     string s = "This will be measured on a single line";
-        //     float expectedWidth = s.Length * this.MonoSpaceFont.Size;
-        //     SizeF size = this.GraphicsInstance.MeasureStringLineHeight(s, this.MonoSpaceFont, 50);
-        //     Assert.AreEqual(expectedWidth, size.Width);
-        //     Assert.AreEqual(this.MonoSpaceFont.Size, size.Height);
-        // }
-
         [Test]
         /// <summary>
         /// When a line height smaller than the character height is passed to MeasureString, the height
