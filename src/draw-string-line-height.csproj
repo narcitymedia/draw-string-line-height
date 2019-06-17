@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>draw_string_line_height</RootNamespace>
+    <RootNamespace>NarcityMedia.DrawStringLineHeight</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
