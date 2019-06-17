@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using NUnit.Framework;
-using draw_string_line_height;
+using NarcityMedia.DrawStringLineHeight;
 
 namespace Tests
 {
@@ -67,8 +67,10 @@ namespace Tests
             Assert.AreEqual(wordCount, lines.Length);
         }
 
+        [Test]
         /// <summary>
-        /// Make sure that words contained in the returned array are in the same order as they appear in the original string
+        /// Make sure that words contained in the returned array are in the same order
+        /// as they appear in the original string
         /// </summary>
         [TestCase("Coding is fun!")]
         [TestCase("I love when tests pass")]
@@ -85,8 +87,9 @@ namespace Tests
             }
         }
 
+        [Test]
         /// <summary>
-        /// When using the default maxWidth (Infinity), an array of length 1 should be returned for a non empty or blank string
+        /// When using the default maxWidth (Infinity), an array of length 1 should be returned for any non empty or blank string
         /// </summary>
         public void GetWrappedLines_Default_Width()
         {
@@ -100,10 +103,76 @@ namespace Tests
 
     public class GraphicsExtensionTests_MeasureString
     {
+        protected Bitmap Canvas;
+        protected Graphics GraphicsInstance;
+        protected Font MonoSpaceFont;
+        protected SolidBrush TextBrush;
+
+        /// <summary>
+        /// Declard as a static constant so it's accessible to attributes
+        /// </summary>
+        protected const int FONT_SIZE = 16;
+        protected Random RndGenerator;
+
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            this.Canvas = new Bitmap(1080, 1080);
+            this.GraphicsInstance = Graphics.FromImage(this.Canvas);
+            this.GraphicsInstance.Clear(Color.White);
+            this.MonoSpaceFont = new Font(FontFamily.GenericMonospace, FONT_SIZE);
+            this.TextBrush = new SolidBrush(Color.Black);
+            this.RndGenerator = new Random();
+        }
+
         [Test]
         public void MeasureString_Empty_String()
         {
+            int randomMaxWidth = this.RndGenerator.Next(10, 100);
+            int randomLineHeight = this.RndGenerator.Next(10, 100);
+            SizeF size = this.GraphicsInstance.MeasureStringLineHeight(String.Empty, this.MonoSpaceFont, randomMaxWidth, randomLineHeight);
+            Assert.AreEqual(0, size.Width);
+            Assert.AreEqual(0, size.Height);
+        }
 
+        // [Test]
+        // /// <summary>
+        // /// When no max width is given, the text should fit entirely on one line, so the returned size should
+        // /// have a width equal to the length of all characters
+        // /// </summary>
+        // public void MeasureString_No_Max_Width()
+        // {
+        //     string s = "This will be measured on a single line";
+        //     float expectedWidth = s.Length * this.MonoSpaceFont.Size;
+        //     SizeF size = this.GraphicsInstance.MeasureStringLineHeight(s, this.MonoSpaceFont, 50);
+        //     Assert.AreEqual(expectedWidth, size.Width);
+        //     Assert.AreEqual(this.MonoSpaceFont.Size, size.Height);
+        // }
+
+        [Test]
+        /// <summary>
+        /// When a line height smaller than the character height is passed to MeasureString, the height
+        /// of the character itself should be returned to make sure the 'real' text painting region
+        /// is returned to the user, otherwise, the line height should be returned
+        /// </summary>
+        /// <param name="lineHeight">Tested lineheight</param>
+        [TestCase(FONT_SIZE)]
+        [TestCase(FONT_SIZE - 1)]
+        [TestCase(FONT_SIZE + 1)]
+        [TestCase(int.MaxValue)]
+        public void MeasureString_One_Line_Height(int lineHeight)
+        {
+            string s = "a";
+            SizeF size = this.GraphicsInstance.MeasureStringLineHeight(s, this.MonoSpaceFont, int.MaxValue, lineHeight);
+
+            if (lineHeight <= this.MonoSpaceFont.Height)
+            {
+                Assert.AreEqual(this.MonoSpaceFont.Height, size.Height, "Expected returned size's height to correspond to the font's height");
+            }
+            else if (lineHeight > this.MonoSpaceFont.Height)
+            {
+                Assert.AreEqual(lineHeight, size.Height, "Expected returned size's height to correspond to the custom line height");
+            }
         }
     }
     
@@ -143,8 +212,7 @@ namespace Tests
                 "test_" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString() + ".png"
             );
 
-            TestContext.Progress.WriteLine(imgPath);
-            TestContext.Progress.WriteLine(TestContext.CurrentContext.WorkDirectory);
+            TestContext.Progress.WriteLine("Saving test generated image to " + imgPath);
             this.canvas.Save(imgPath, ImageFormat.Png);
             Assert.AreEqual(true, true);
         }
