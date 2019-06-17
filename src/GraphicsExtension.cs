@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 
-namespace draw_string_line_height
+namespace NarcityMedia.DrawStringLineHeight
 {
     /// <summary>
     /// Provides extension methods for the <see cref="System.Drawing.Graphics"/>
@@ -47,7 +47,6 @@ namespace draw_string_line_height
                 else
                 {
                     currentLine = currentLine + " " + word;
-                    // If last word
                     if (i + 1 == words.Length) lines.Add(currentLine);
                 }
             }
@@ -64,9 +63,13 @@ namespace draw_string_line_height
         /// <param name="maxWidth">A positive number (grater than zero) that represents the width in which the text must fit</param>        
         /// <param name="lineHeight">The custom line height used to calculate the text size</param>
         /// <returns>The size taken up by the given text with the given parameters</returns>
-        public static SizeF MeasureString(this Graphics that, string text, Font font, int maxWidth, int lineHeight)
+        /// <remarks>
+        /// This extension method isn't an overload of the <see cref="System.Drawing.Graphics.MeasureString(string, Font)" /> method
+        /// because the method had conflicting overloads and it ended up being confusing
+        /// </remarks>
+        public static SizeF MeasureStringLineHeight(this Graphics that, string text, Font font, int maxWidth, int lineHeight)
         {
-            if (text == null || text.Length == 0)
+            if (String.IsNullOrEmpty(text))
                 return new SizeF(0, 0); 
             if (font == null)
                 throw new ArgumentNullException("font");
@@ -75,7 +78,12 @@ namespace draw_string_line_height
             
             if (lines.Length == 0) return new SizeF(0, 0);
 
-            return new SizeF(maxWidth, lineHeight * lines.Length);
+            SizeF[] sizes = lines.Select(l => that.MeasureString(l, font)).ToArray();
+            int lineIncrement = Math.Max(lineHeight, font.Height);
+            float totalWidth = sizes.Max(s => s.Width);
+            float totalHeight = lines.Length * lineIncrement;
+
+            return new SizeF(totalWidth, totalHeight);
         }
 
         /// <summary>
