@@ -33,21 +33,36 @@ namespace NarcityMedia.DrawStringLineHeight
 
             List<string> lines = new List<string>();
 
-            string currentLine = words[0];
+            float spaceCharWidth = that.MeasureString(" ", font).Width;
+            float currentWidth = 0;
+            string currentLine = "";
             for (int i = 0; i < words.Length; i++)
             {
-                string word = words[i];
-                float potentialWidth = that.MeasureString(currentLine, font).Width;
-                if (potentialWidth > maxWidth)
+                float currentWordWidth = that.MeasureString(words[i], font).Width;
+                if (currentWidth != 0)
                 {
-                    lines.Add(currentLine);
-                    if (i + 1 < words.Length) currentLine = words[i + 1];
-                    continue;
+                    float potentialWidth = spaceCharWidth + currentWidth;
+                    if (currentWidth + potentialWidth < maxWidth)
+                    {
+                        currentWidth += potentialWidth;
+                        currentLine += " " + words[i];
+                    }
+                    else
+                    {
+                        lines.Add(currentLine);
+                        currentLine = words[i];
+                        currentWidth = currentWordWidth;
+                    }
                 }
                 else
                 {
-                    currentLine = currentLine + " " + word;
-                    if (i + 1 == words.Length) lines.Add(currentLine);
+                    currentWidth += currentWordWidth;
+                    currentLine = words[i];
+                }
+
+                if (i == words.Length - 1)
+                {
+                    lines.Add(currentLine);
                 }
             }
 
@@ -110,6 +125,7 @@ namespace NarcityMedia.DrawStringLineHeight
             Rectangle lastDrawn = new Rectangle(Convert.ToInt32(layoutRectangle.X), Convert.ToInt32(layoutRectangle.Y), 0, 0);
             foreach (string line in lines)
             {
+                Console.WriteLine(line);
                 SizeF lineSize = that.MeasureString(line, font);
                 Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + lineHeight);
                 that.DrawString(line, font, brush, lineOrigin);
