@@ -41,10 +41,10 @@ namespace NarcityMedia.DrawStringLineHeight
                 float currentWordWidth = that.MeasureString(words[i], font).Width;
                 if (currentWidth != 0)
                 {
-                    float potentialWidth = spaceCharWidth + currentWidth;
-                    if (currentWidth + potentialWidth < maxWidth)
+                    float potentialWordWidth = spaceCharWidth + currentWordWidth;
+                    if (currentWidth + potentialWordWidth < maxWidth)
                     {
-                        currentWidth += potentialWidth;
+                        currentWidth += potentialWordWidth;
                         currentLine += " " + words[i];
                     }
                     else
