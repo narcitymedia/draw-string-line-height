@@ -127,7 +127,8 @@ namespace NarcityMedia.DrawStringLineHeight
             {
                 Console.WriteLine(line);
                 SizeF lineSize = that.MeasureString(line, font);
-                Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + lineHeight);
+                int increment = lastDrawn.Height == 0 ? 0 : lineHeight;
+                Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + increment);
                 that.DrawString(line, font, brush, lineOrigin);
                 lastDrawn = new Rectangle(lineOrigin, Size.Round(lineSize));
             }
