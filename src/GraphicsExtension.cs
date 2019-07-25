@@ -115,25 +115,20 @@ namespace NarcityMedia.DrawStringLineHeight
         /// <param name="maxWidth">A positive number (grater than zero) that represents the width in which the text must fit</param>        
         /// <param name="lineHeight">The distance in pixels that separaes the lines of the text</param>
         /// <param name="layoutRectangle"><see cref="System.Drawing.RectangleF" /> structure that specifies the location of the drawn text</param>
-        /// <param name="format">that specifies formatting attributes, such as line spacing and alignment, that are applied to the drawn text.</param>
-        /// <returns></returns>
-        public static Rectangle[] DrawString(this Graphics that, string text, Font font, Brush brush, int maxWidth,
+        /// <param name="format">Specifies formatting attributes, such as line spacing and alignment, that are applied to the drawn text.</param>
+        public static void DrawString(this Graphics that, string text, Font font, Brush brush, int maxWidth,
                                             int lineHeight, RectangleF layoutRectangle, StringFormat format)
         {
             string[] lines = that.GetWrappedLines(text, font, maxWidth).ToArray();
-            Rectangle[] regions = new Rectangle[lines.Length];
             Rectangle lastDrawn = new Rectangle(Convert.ToInt32(layoutRectangle.X), Convert.ToInt32(layoutRectangle.Y), 0, 0);
             foreach (string line in lines)
             {
-                Console.WriteLine(line);
                 SizeF lineSize = that.MeasureString(line, font);
                 int increment = lastDrawn.Height == 0 ? 0 : lineHeight;
                 Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + increment);
                 that.DrawString(line, font, brush, lineOrigin);
                 lastDrawn = new Rectangle(lineOrigin, Size.Round(lineSize));
             }
-
-            return regions;
         }
     }
 }
