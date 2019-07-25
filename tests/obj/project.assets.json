@@ -1683,17 +1683,17 @@
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
-      "draw-string-line-height/1.0.0": {
+      "DrawStringLineHeight/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v2.1",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "System.Drawing.Common": "4.5.1"
         },
         "compile": {
-          "bin/placeholder/draw-string-line-height.dll": {}
+          "bin/placeholder/DrawStringLineHeight.dll": {}
         },
         "runtime": {
-          "bin/placeholder/draw-string-line-height.dll": {}
+          "bin/placeholder/DrawStringLineHeight.dll": {}
         }
       }
     }
@@ -5734,7 +5734,7 @@
         "system.xml.xpath.xmldocument.nuspec"
       ]
     },
-    "draw-string-line-height/1.0.0": {
+    "DrawStringLineHeight/1.0.0": {
       "type": "project",
       "path": "../src/draw-string-line-height.csproj",
       "msbuildProject": "../src/draw-string-line-height.csproj"
@@ -5742,10 +5742,10 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "DrawStringLineHeight >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 15.7.2",
       "Microsoft.NETCore.App >= 2.1.0",
       "NUnit3TestAdapter >= 3.10.0",
-      "draw-string-line-height >= 1.0.0",
       "nunit >= 3.10.1"
     ]
   },
@@ -5756,11 +5756,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\tests.csproj",
+      "projectUniqueName": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\tests.csproj",
       "projectName": "tests",
-      "projectPath": "c:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\tests.csproj",
+      "projectPath": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\tests.csproj",
       "packagesPath": "C:\\Users\\gabri\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\obj\\",
+      "outputPath": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5779,8 +5779,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "c:\\Users\\gabri\\Desktop\\draw-string-line-height\\src\\draw-string-line-height.csproj": {
-              "projectPath": "c:\\Users\\gabri\\Desktop\\draw-string-line-height\\src\\draw-string-line-height.csproj"
+            "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\src\\draw-string-line-height.csproj": {
+              "projectPath": "C:\\Users\\gabri\\Desktop\\draw-string-line-height\\src\\draw-string-line-height.csproj"
             }
           }
         }
