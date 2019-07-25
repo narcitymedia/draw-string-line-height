@@ -54,7 +54,7 @@ public static Bitmap GenerateOrganicThumbnail()
 
 ## MeasureStringLineHeight
 
-```
+```Csharp
 public static SizeF MeasureStringLineHeight(this Graphics that, string text, Font font, int maxWidth, int lineHeight)
 ```
 
@@ -80,7 +80,7 @@ because the method had conflicting overloads and it ended up being confusing
 
 ## DrawString
 
-```
+```Csharp
 public static void DrawString(this Graphics that, string text, Font font, Brush brush, int maxWidth,
                                             int lineHeight, RectangleF layoutRectangle, StringFormat format)
 ```
@@ -104,7 +104,7 @@ width, line height and format
 
 ## GetWrappedLines
 
-```
+```Csharp
 public static IEnumerable<string> GetWrappedLines(this Graphics that, string text, Font font, double maxWidth = double.PositiveInfinity)
 ```
 
