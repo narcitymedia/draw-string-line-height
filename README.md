@@ -10,8 +10,8 @@ Additionally, you'll probably need to install tools like a [dotnet sdk and runti
 # Running tests
 
 In order to run the unit tests for yourself:
- 1 - Change directory to the root of this repository (where the .sln file is located)
- 2 - Run `dotnet test`
+ 1. Change directory to the root of this repository (where the .sln file is located)
+ 2. Run `dotnet test`
 
 # Installation
 
