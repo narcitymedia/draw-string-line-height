@@ -23,7 +23,7 @@ Firstly, you'll need to use the `NarcityMedia.DrawStringLineHeight` namespace to
 
 ## Code Example
 
-```
+```Csharp
 public static Bitmap GenerateOrganicThumbnail()
 {
     string text = "Some pretty cooooooool text";
