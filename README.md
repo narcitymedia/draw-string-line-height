@@ -24,7 +24,7 @@ Firstly, you'll need to use the `NarcityMedia.DrawStringLineHeight` namespace to
 ## Code Example
 
 ```Csharp
-public static Bitmap GenerateOrganicThumbnail()
+public static Bitmap GenerateImage()
 {
     string text = "Some pretty cooooooool text";
     // PAY ATTENTION to the GraphicsUnit you use, it should match that of the PageUnit property of your System.Drawing.Graphics instance
