@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "draw-string-line-height", "src\draw-string-line-height.csproj", "{3AB5E876-FA06-453F-87A1-50F28EFA016E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "draw-string-line-height", "src\draw-string-line-height.csproj", "{3AB5E876-FA06-453F-87A1-50F28EFA016E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{D16CAC9B-697A-4D1B-B72A-8F1CE0166CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests\tests.csproj", "{D16CAC9B-697A-4D1B-B72A-8F1CE0166CCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

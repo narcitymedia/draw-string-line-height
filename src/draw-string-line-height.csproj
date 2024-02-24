@@ -1,22 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>NarcityMedia.DrawStringLineHeight</RootNamespace>
     <IsTestProject>false</IsTestProject>
-
     <PackageId>DrawStringLineHeight</PackageId>
     <Title>DrawStringLineHeight</Title>
     <PackageDescription>Extension methods to the System.Drawing.Graphics class to allow for drawing text on an image with a custom line height.</PackageDescription>
     <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
-    <PackageTags>drawing;text;line-height;library;extension;open-source</PackageTags>    
+    <PackageTags>drawing;text;line-height;library;extension;open-source</PackageTags>
     <RepositoryUrl>https://github.com/narcitymedia/draw-string-line-height</RepositoryUrl>
     <Version>1.0.0</Version>
     <Authors>Gabriel Cardinal</Authors>
     <Company>Narcity Media</Company>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
   </ItemGroup>
 </Project>

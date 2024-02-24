@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace NarcityMedia.DrawStringLineHeight
 {
@@ -22,47 +23,174 @@ namespace NarcityMedia.DrawStringLineHeight
         /// </returns>
         public static IEnumerable<string> GetWrappedLines(this Graphics that, string text, Font font, double maxWidth = double.PositiveInfinity)
         {
-            if (String.IsNullOrEmpty(text)) return new string[0];
+            if (String.IsNullOrEmpty(text)) return Array.Empty<string>();
             if (font == null) throw new ArgumentNullException("font", "The 'font' parameter must not be null");
             if (maxWidth <= 0) throw new ArgumentOutOfRangeException("maxWidth", "Maximum width must be greater than zero");
 
             // See https://stackoverflow.com/questions/6111298/best-way-to-specify-whitespace-in-a-string-split-operation
-            string[] words = text.Split((char[]) null, StringSplitOptions.RemoveEmptyEntries);
 
-            if (words.Length == 0) return new string[0];
+            //treat English words as individual units, and everything else as a single chunk until a whitespace is encountered.
+            var Pattern = @"\r?\n|[\u0250-\uFFFF]+|\b[\u0021-\u024F]+[ \f\t\v]*|\b[ \f\t\v]+|[\u0021-\u024F]";
+            var reg = new Regex(Pattern, RegexOptions.Multiline | RegexOptions.CultureInvariant);
+            var m = reg.Matches(text);
+            var words = new List<string>(m.Select(m => m.Value).AsEnumerable());
+
+            //Exclude empty elements or spaces at the end of the words.
+            while (words.Count > 0 && string.IsNullOrWhiteSpace(words[words.Count - 1]))
+            {
+                words.RemoveAt(words.Count - 1);
+            }
+
+            if (words.Count == 0) return Array.Empty<string>();
 
             List<string> lines = new List<string>();
 
-            float spaceCharWidth = that.MeasureString(" ", font).Width;
             float currentWidth = 0;
             string currentLine = "";
-            for (int i = 0; i < words.Length; i++)
+            using (StringFormat sf = new(StringFormat.GenericTypographic))
             {
-                float currentWordWidth = that.MeasureString(words[i], font).Width;
-                if (currentWidth != 0)
+                sf.FormatFlags |= StringFormatFlags.LineLimit | StringFormatFlags.FitBlackBox;
+                for (int i = 0; i < words.Count; i++)
                 {
-                    float potentialWordWidth = spaceCharWidth + currentWordWidth;
-                    if (currentWidth + potentialWordWidth < maxWidth)
+                    //If the word is a line break, add the current line to the list and start a new line.
+                    if (Regex.IsMatch(words[i], @"^\r?\n$"))
                     {
-                        currentWidth += potentialWordWidth;
-                        currentLine += " " + words[i];
+                        lines.Add(currentLine == "" ? "\uE007F" : currentLine);
+                        currentLine = "";
+                        currentWidth = 0;
+                        continue;
+                    }
+                    float currentWordWidth = that.MeasureString(words[i], font,
+                        int.MaxValue, sf).Width;
+                    if (currentWidth != 0)
+                    {
+                        float potentialWordWidth = currentWordWidth;
+                        if (currentWidth + potentialWordWidth < maxWidth)
+                        {
+                            currentWidth += potentialWordWidth;
+                            currentLine += words[i];
+                        }
+                        else
+                        {
+                            // If words[i] starts with [\u0250-\uFFFF], treat it as CJK and try to fill the remaining without line break
+                            // Otherwise, line break here
+                            if (!Regex.IsMatch(words[i], @"^[\u0250-\uFFFF]"))
+                            {
+                                lines.Add(currentLine);
+                                currentLine = words[i];
+                                if (currentWordWidth <= maxWidth)
+                                {
+                                    currentWidth = currentWordWidth;
+                                }
+                                else
+                                {
+                                    //If the currentWordWidth is already longer than maxWidth, the characters in the current line should be split
+                                    //and the remainder should be carried over to the next line.
+                                    do
+                                    {
+                                        var pos = currentLine.Length - 1;
+                                        while (that.MeasureString(currentLine.Substring(0, pos),
+                                                   font, int.MaxValue, sf).Width > maxWidth && pos > 1)
+                                        {
+                                            pos--;
+                                        }
+
+                                        lines.Add(currentLine[..pos]);
+                                        currentLine = currentLine[pos..];
+                                        //Add a condition to handle the case where there is only one character
+                                        //but it already exceeds the maximum width (when maxWidth is smaller than one character).
+                                    } while (that.MeasureString(currentLine, font, int.MaxValue, sf).Width > maxWidth &&
+                                             currentLine.Length > 1);
+
+                                    currentWidth = that.MeasureString(currentLine, font, int.MaxValue, sf).Width;
+                                }
+                            }
+                            else
+                            {
+                                currentLine += words[i];
+                                if (potentialWordWidth + currentWidth <= maxWidth)
+                                {
+                                    currentWidth += potentialWordWidth;
+                                }
+                                else
+                                {
+                                    //If the currentWordWidth is already longer than maxWidth, the characters in the current line should be split
+                                    //and the remainder should be carried over to the next line.
+                                    do
+                                    {
+                                        var pos = currentLine.Length - 1;
+                                        while (that.MeasureString(currentLine.Substring(0, pos),
+                                                   font, int.MaxValue, sf).Width > maxWidth && pos > 1)
+                                        {
+                                            pos--;
+                                        }
+
+                                        lines.Add(currentLine[..pos]);
+                                        currentLine = currentLine[pos..];
+                                        //Add a condition to handle the case where there is only one character
+                                        //but it already exceeds the maximum width (when maxWidth is smaller than one character).
+                                    } while (that.MeasureString(currentLine, font, int.MaxValue, sf).Width > maxWidth &&
+                                             currentLine.Length > 1);
+
+                                    currentWidth = that.MeasureString(currentLine, font, int.MaxValue, sf).Width;
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        lines.Add(currentLine);
-                        currentLine = words[i];
-                        currentWidth = currentWordWidth;
-                    }
-                }
-                else
-                {
-                    currentWidth += currentWordWidth;
-                    currentLine = words[i];
-                }
+                        if (currentWordWidth <= maxWidth)
+                        {
+                            currentWidth += currentWordWidth;
+                            currentLine = words[i];
+                        }
+                        else
+                        {
+                            currentLine = words[i];
+                            //If the currentWordWidth is already longer than maxWidth, the characters in the current line should be split
+                            //and the remainder should be carried over to the next line.
+                            //そもそも詰めようがないので、そのまま次の行に移動する。
+                            if (currentLine.Length <= 1)
+                            {
+                                lines.Add(currentLine);
+                                currentLine = "";
+                                currentWidth = 0;
+                            }
+                            else
+                            {
 
-                if (i == words.Length - 1)
-                {
-                    lines.Add(currentLine);
+                                do
+                                {
+                                    var pos = currentLine.Length - 1;
+                                    while (that.MeasureString(currentLine.Substring(0, pos),
+                                               font, int.MaxValue, sf).Width > maxWidth && pos > 1)
+                                    {
+                                        pos--;
+                                    }
+
+                                    lines.Add(currentLine[..pos]);
+                                    currentLine = currentLine[pos..];
+                                    //Add a condition to handle the case where there is only one character
+                                    //but it already exceeds the maximum width (when maxWidth is smaller than one character).
+                                } while (that.MeasureString(currentLine, font, int.MaxValue, sf).Width > maxWidth &&
+                                         currentLine.Length > 1);
+
+                                currentWidth = that.MeasureString(currentLine, font, int.MaxValue, sf).Width;
+                                //if currentLine remains only whitespaces, add it to last line.
+                                if (string.IsNullOrWhiteSpace(currentLine))
+                                {
+                                    lines[^1] += currentLine;
+                                    currentLine = "";
+                                }
+                            }
+                        }
+                    }
+
+                    //write down the remaining content of currentLine and finish.
+                    if (i == words.Count - 1 && !string.IsNullOrEmpty(currentLine))
+                    {
+                        lines.Add(currentLine);
+                    }
                 }
             }
 
@@ -85,7 +213,7 @@ namespace NarcityMedia.DrawStringLineHeight
         public static SizeF MeasureStringLineHeight(this Graphics that, string text, Font font, int maxWidth, int lineHeight)
         {
             if (String.IsNullOrEmpty(text))
-                return new SizeF(0, 0); 
+                return new SizeF(0, 0);
             if (font == null)
                 throw new ArgumentNullException("font");
             if (maxWidth <= 0)
@@ -121,13 +249,22 @@ namespace NarcityMedia.DrawStringLineHeight
         {
             string[] lines = that.GetWrappedLines(text, font, maxWidth).ToArray();
             Rectangle lastDrawn = new Rectangle(Convert.ToInt32(layoutRectangle.X), Convert.ToInt32(layoutRectangle.Y), 0, 0);
+            format.FormatFlags |= StringFormatFlags.FitBlackBox | StringFormatFlags.NoClip | StringFormatFlags.NoWrap;
+            format.Trimming = StringTrimming.None;
             foreach (string line in lines)
             {
                 SizeF lineSize = that.MeasureString(line, font);
                 int increment = lastDrawn.Height == 0 ? 0 : lineHeight;
                 Point lineOrigin = new Point(lastDrawn.X, lastDrawn.Y + increment);
-                that.DrawString(line, font, brush, lineOrigin);
+                RectangleF lineRect = new RectangleF(lineOrigin, lineSize);
+                lineRect.Width = maxWidth;
+                // Empty line markers are treated as non-drawing objects
+                that.DrawString(line == "\uE007F" ? "" : line, font, brush, lineRect, format);
                 lastDrawn = new Rectangle(lineOrigin, Size.Round(lineSize));
+                if (line == "\uE007F") // If there is a marker for an empty line, add line height to the last drawn rectangle
+                {
+                    lastDrawn.Height += lineHeight;
+                }
             }
         }
     }
