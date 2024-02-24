@@ -2,8 +2,11 @@ This package contains extension methods to the `System.Drawing.Graphics` class t
 
 The project source code is located in the `src` folder and the unit tests project for the library is located in the `tests` directory.
 
+# PLEASE NOTE:
+**This is a forked version.** Original repo is located at https://github.com/narcitymedia/draw-string-line-height 
+
 # Requirements
-This package targets `netstandard2.0` so it is compatible with `netcoreapp2.2^` and `net461^`.
+This package targets `.net8.0`. 
 
 Additionally, you'll probably need to install tools like a [dotnet sdk and runtime](https://dotnet.microsoft.com/download) on your computer
 
@@ -15,7 +18,7 @@ In order to run the unit tests for yourself:
 
 # Installation
 
-You can download the package from [nuget.org](https://www.nuget.org/packages/DrawStringLineHeight/)
+Clone repo, and build by your own.
 
 # Usage
 
